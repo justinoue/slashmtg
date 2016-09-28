@@ -27,8 +27,9 @@ app.post('/lookup', function(req, res) {
             try {
                 if (!err && resp.statusCode == 200) {
                     var json_body = JSON.parse(body);
-                    var card_name = json_body.cards[0].name;
-                    var image_url = json_body.cards[0].imageUrl;
+                    // console.log(json_body.cards[json_body.cards.length - 1]);
+                    var card_name = json_body.cards[json_body.cards.length - 1].name;
+                    var image_url = json_body.cards[json_body.cards.length - 1].imageUrl;
                     res.json({
                         "response_type": "in_channel",
                         "text": image_url
