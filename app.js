@@ -1,17 +1,18 @@
 //config
 var token = '6UmmrF9HuA5xByLU1Giokjwq';
-var mtg_endpoint = 'https://api.magicthegathering.io/v1';
+var mtg_endpoint = 'https://api.magicthegathering.io/v1/cards';
 
 //requires
 var express = require('express'),
-    http = require('http'),
+    https = require('https'),
+    request = require('request'),
     bodyParser = require('body-parser');
 
 //application
 var app = express();
 
 //initialization
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.set('port', (process.env.PORT || 5000));
 
 //routes
@@ -20,15 +21,34 @@ app.get('/', function (req, res) {
 });
 
 app.post('/lookup', function(req, res) {
-    res.json({
-        "response_type": "in_channel",
-        "text": "hi",
-        "attachments": [
-            { 
-                "text":"Partly cloudy today and tomorrow"
+    try{
+        var name = req.body.text;
+        request(mtg_endpoint+'?name='+name, function(err, resp, body){
+            try {
+                if (!err && resp.statusCode == 200) {
+                    var json_body = JSON.parse(body);
+                    console.log(json_body.cards[0]);
+                    var card_name = json_body.cards[0].name;
+                    var image_url = json_body.cards[0].imageUrl;
+                    res.json({
+                        "response_type": "in_channel",
+                        "text": name,
+                        "attachments": [
+                            {
+                                "image_url": image_url
+                            }
+                        ]
+                    }); 
+                }
+            } catch (ex) {
+                console.log(ex);
+                res.send("Nothing found :(."); 
             }
-        ]
-    });
+        });
+    } catch (ex) {
+        console.log(ex);
+        res.send("Nothing found :(."); 
+    }
 });
 
 
