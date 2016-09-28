@@ -27,12 +27,11 @@ app.post('/lookup', function(req, res) {
             try {
                 if (!err && resp.statusCode == 200) {
                     var json_body = JSON.parse(body);
-                    console.log(json_body.cards[0]);
                     var card_name = json_body.cards[0].name;
                     var image_url = json_body.cards[0].imageUrl;
                     res.json({
                         "response_type": "in_channel",
-                        "text": name,
+                        "text": card_name,
                         "attachments": [
                             {
                                 "fallback": card_name,
