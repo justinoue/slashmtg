@@ -1,0 +1,25 @@
+{
+  "name": "slashmtg",
+  "version": "0.0.1",
+  "description": "/mtg command for Slack",
+  "main": "app.js",
+  "private": false,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/justinoue/slashmtg.git"
+  },
+  "author": "justinoue",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/justinoue/slashmtg/issues"
+  },
+  "dependencies": {
+    "express": "~4.13.3",
+    "body-parser": "~1.14.0"
+  },
+  "homepage": "https://github.com/justinoue/slashmtg#readme"
+}
