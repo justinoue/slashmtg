@@ -31,14 +31,18 @@ app.post('/lookup', function(req, res) {
                     var image_url = json_body.cards[0].imageUrl;
                     res.json({
                         "response_type": "in_channel",
-                        "text": card_name,
-                        "attachments": [
-                            {
-                                "fallback": card_name,
-                                "image_url": image_url
-                            }
-                        ]
-                    }); 
+                        "text": image_url
+                    });
+                    // res.json({
+                    //     "response_type": "in_channel",
+                    //     "text": card_name,
+                    //     "attachments": [
+                    //         {
+                    //             "fallback": card_name,
+                    //             "image_url": image_url
+                    //         }
+                    //     ]
+                    // }); 
                 }
             } catch (ex) {
                 console.log(ex);
