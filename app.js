@@ -35,6 +35,7 @@ app.post('/lookup', function(req, res) {
                         "text": name,
                         "attachments": [
                             {
+                                "fallback": card_name,
                                 "image_url": image_url
                             }
                         ]
