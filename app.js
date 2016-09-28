@@ -20,7 +20,15 @@ app.get('/', function (req, res) {
 });
 
 app.post('/lookup', function(req, res) {
-    res.json({"message": "hi"});
+    res.json({
+        "response_type": "in_channel",
+        "text": "hi",
+        "attachments": [
+            { 
+                "text":"Partly cloudy today and tomorrow"
+            }
+        ]
+    });
 });
 
 
