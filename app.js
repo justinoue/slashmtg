@@ -1,5 +1,4 @@
 //config
-var token = '6UmmrF9HuA5xByLU1Giokjwq';
 var mtg_endpoint = 'https://api.magicthegathering.io/v1/cards';
 
 //requires
