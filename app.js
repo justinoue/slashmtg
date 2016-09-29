@@ -72,7 +72,10 @@ app.post('/src', function(req, res){
         path.push(paths[arandom(paths.length)]);
     }
 
-    res.send(path.join('/'));
+    res.json({
+        "response_type": "in_channel",
+        "message": path.join('/')
+    });
 });
 
 
