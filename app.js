@@ -14,6 +14,11 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set('port', (process.env.PORT || 5000));
 
+//functions
+function arandom(max){
+    return Math.floor(Math.random()*max)
+}
+
 //routes
 app.get('/', function (req, res) {
   res.json({"message": "hi!"});
@@ -26,23 +31,12 @@ app.post('/lookup', function(req, res) {
             try {
                 if (!err && resp.statusCode == 200) {
                     var json_body = JSON.parse(body);
-                    // console.log(json_body.cards[json_body.cards.length - 1]);
                     var card_name = json_body.cards[json_body.cards.length - 1].name;
                     var image_url = json_body.cards[json_body.cards.length - 1].imageUrl;
                     res.json({
                         "response_type": "in_channel",
                         "text": image_url
                     });
-                    // res.json({
-                    //     "response_type": "in_channel",
-                    //     "text": card_name,
-                    //     "attachments": [
-                    //         {
-                    //             "fallback": card_name,
-                    //             "image_url": image_url
-                    //         }
-                    //     ]
-                    // }); 
                 }
             } catch (ex) {
                 console.log(ex);
@@ -53,6 +47,32 @@ app.post('/lookup', function(req, res) {
         console.log(ex);
         res.send("Nothing found :(."); 
     }
+});
+
+app.post('/src', function(req, res){
+    var paths = [
+        'chromeover',
+        'src',
+        'browser',
+        'src',
+        'chrome',
+        'browser',
+        'chromeos',
+        'usr',
+        'lib',
+        'etc',
+        'libs',
+        'google',
+        'data',
+        'chromiumos',
+        'project',
+    ];
+    var path = [''];
+    for(var i=0; i < 5 + arandom(10); i++){
+        path.push(paths[arandom(paths.length)]);
+    }
+
+    res.send(path.join('/'));
 });
 
 
