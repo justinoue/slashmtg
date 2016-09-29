@@ -74,7 +74,7 @@ app.post('/src', function(req, res){
 
     res.json({
         "response_type": "in_channel",
-        "message": path.join('/')
+        "text": path.join('/')
     });
 });
 
