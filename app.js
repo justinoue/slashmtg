@@ -53,22 +53,31 @@ app.post('/lookup', function(req, res) {
 app.post('/dragonsay', function(req, res){
     try{
         var msg = req.body.text;
-        fs.readFile('dragon.tpl', "utf-8", function(err, data){
-            if(err){
-                res.send("Whoops~");
-            } else {
-                var dragon = data;
-                console.log(dragon);
-                dragon = dragon.replace('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', msg);
+        var tpl_key = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 
-                res.json({
-                    "response_type": "in_channel",
-                    "text": dragon
-                });
-            }
-        });
+        if(msg.length > tpl_key.length){
+            res.send("Your message is too big for the dragon.");
+        } else {
+            fs.readFile('dragon.tpl', "utf-8", function(err, data){
+                if(err){
+                    res.send("Something went wrong.");
+                } else {
+                    var dragon = data;
+
+                    while(msg.length < tpl_key.length){
+                        msg = msg + " ";
+                    }
+                    dragon = dragon.replace(tpl_key, msg);
+
+                    res.json({
+                        "response_type": "in_channel",
+                        "text": dragon
+                    });
+                }
+            });
+        }
     } catch (ex) {
-        res.send("Whoops~");
+        res.send("Something went wrong.");
     }
 });
 
