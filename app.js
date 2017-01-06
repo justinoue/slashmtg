@@ -5,7 +5,8 @@ var mtg_endpoint = 'https://api.magicthegathering.io/v1/cards';
 var express = require('express'),
     https = require('https'),
     request = require('request'),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    fs = require('fs');
 
 //application
 var app = express();
@@ -46,6 +47,28 @@ app.post('/lookup', function(req, res) {
     } catch (ex) {
         console.log(ex);
         res.send("Nothing found :(."); 
+    }
+});
+
+app.post('/dragonsay', function(req, res){
+    try{
+        var msg = req.body.text;
+        fs.readFile('dragon.tpl', "utf-8", function(err, data){
+            if(err){
+                res.send("Whoops~");
+            } else {
+                var dragon = data;
+                console.log(dragon);
+                dragon = dragon.replace('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', msg);
+
+                res.json({
+                    "response_type": "in_channel",
+                    "text": dragon
+                });
+            }
+        });
+    } catch (ex) {
+        res.send("Whoops~");
     }
 });
 
